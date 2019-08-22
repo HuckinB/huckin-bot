@@ -3,7 +3,7 @@ const config = require("../config.json");
 const mysql = require("mysql");
 
 bot.on("messageUpdate", (oldMessage, newMessage) => {
-    let logchannel = guild.channels.find(x => x.name === "logs")
+    let logchannel = bot.channels.find(x => x.name === "logs")
     let embed = new Discord.RichEmbed()
     .setAuthor(newMessage.author.tag, newMessage.author.displayAvatarURL)
     .setDescription('**Message edited by** ' + newMessage.author + ' **in** ' + newMessage.channel)

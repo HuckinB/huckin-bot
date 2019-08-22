@@ -3,7 +3,7 @@ const config = require("../config.json");
 const mysql = require("mysql");
 
 bot.on("messageDelete", (messageDelete) => {
-    let logchannel = guild.channels.find(x => x.name === "logs")
+    let logchannel = bot.channels.find(x => x.name === "logs")
     let embed = new Discord.RichEmbed()
         .setAuthor(messageDelete.author.tag, messageDelete.author.displayAvatarURL)
         .setDescription('Message sent by ' + messageDelete.author + ' deleted in ' + messageDelete.channel)

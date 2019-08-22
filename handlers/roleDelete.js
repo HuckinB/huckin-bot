@@ -3,7 +3,7 @@ const config = require("../config.json");
 const mysql = require("mysql");
 
 bot.on("roleDelete", (roleDelete) => {
-    let logchannel = guild.channels.find(x => x.name === "logs")
+    let logchannel = bot.channels.find(x => x.name === "logs")
 
     let embed = new Discord.RichEmbed()
         .setAuthor(roleDelete.guild.name, roleDelete.guild.iconURL)
