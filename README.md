@@ -1,1 +1,1 @@
-# huckin-bot
+# HuckinBot
