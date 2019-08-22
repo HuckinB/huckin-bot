@@ -12,6 +12,7 @@ module.exports.run = async (bot, message, args) => {
     } catch(e) {
         message.channel.send(`ERROR: ${e.message}`)
     }
+    message.delete().catch();
     
 }
 

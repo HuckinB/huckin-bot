@@ -32,6 +32,7 @@ module.exports.run = async (bot, message, args) => {
     
         let sChannel = message.guild.channels.find(c => c.name === "logs")
         sChannel.send(embed)
+    message.delete().catch();
 }
 
 module.exports.help = {

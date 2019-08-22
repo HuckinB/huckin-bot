@@ -13,6 +13,7 @@ module.exports.run = async (bot, message, args) => {
 
     message.channel.send(`I have been online for: ${duration(bot.uptime)}`)
 
+    message.delete().catch();
 }
 
 
