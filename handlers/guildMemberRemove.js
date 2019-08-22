@@ -1,5 +1,6 @@
 const {bot} = require('../index');
 const config = require("../config.json");
+const mysql = require("mysql");
 
 bot.on('guildMemberRemove', (member) => {
     var connection = mysql.createConnection({

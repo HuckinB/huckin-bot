@@ -1,5 +1,6 @@
 const {bot} = require('../index');
 const config = require("../config.json");
+const mysql = require("mysql");
 
 bot.on("guildBanAdd", (guild, user) => {
     var connection = mysql.createConnection({

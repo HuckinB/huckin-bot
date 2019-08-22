@@ -1,5 +1,6 @@
 const {bot} = require('../index');
 const config = require("../config.json");
+const mysql = require("mysql");
 
 bot.on("messageUpdate", (oldMessage, newMessage) => {
     var connection = mysql.createConnection({
