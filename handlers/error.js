@@ -1,7 +1,6 @@
-const {bot} = require('../index');
-const config = require("../config.json");
+const Discord = require("discord.js")
 
-bot.on("error", (error) => {
-    
-	console.error(error);
-});
+
+module.exports = bot => {
+    console.error();
+}
