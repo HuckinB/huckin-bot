@@ -1,8 +1,9 @@
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (bot, message, args) => {
     console.log("Working!");
 }
 
 module.exports.help = {
-    name: "test"
+    name: "test",
+    aliases: []
 }
     
