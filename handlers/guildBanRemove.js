@@ -1,6 +1,7 @@
 const {bot} = require('../index');
 const config = require("../config.json");
 const mysql = require("mysql");
+const Discord = require("discord.js");
 
 bot.on("guildBanRemove", (guild, user) => {
     let logchannel = guild.channels.find(x => x.name === "logs")

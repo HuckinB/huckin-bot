@@ -1,6 +1,7 @@
 const {bot} = require('../index');
 const config = require("../config.json");
 const mysql = require("mysql");
+const Discord = require("discord.js");
 
 bot.on("roleDelete", (roleDelete) => {
     let logchannel = bot.channels.find(x => x.name === "logs")
