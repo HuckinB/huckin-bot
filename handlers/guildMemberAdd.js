@@ -3,28 +3,7 @@ const config = require("../config.json");
 const mysql = require("mysql");
 
 bot.on("guildMemberAdd", member => {
-    var connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'bot',
-        password: 'IgRHhGezoOiw8Wd5',
-        database: 'huckinb'
-    });
-    
-    
-    connection.query('INSERT INTO members (username, userid, joindate, jointime) VALUES ('+`'${member.user.username}','${member.id}','${date}','${timesql}'`+')');
-    connection.query('SELECT * FROM server_log_channels WHERE serverid=' + member.guild.id, function (error, results, fields) {
-        if(error) {
-            throw error;
-            console.log("Error!");
-            return;            
-        }
-    var serverLogChannel;
-    if (results === undefined || results.length == 0) return;
-            serverLogChannel = JSON.stringify(results[0]["channelid"]);
-	    serverLogChannel = serverLogChannel.replace('"','');
-	    serverLogChannel = serverLogChannel.replace('"', '');
-	if(member.guild.channels.get(serverLogChannel) === undefined) return;
-        var logchannel = member.guild.channels.get(serverLogChannel);
+    let logchannel = guild.channels.find(x => x.name === "logs")
         
     let embed = new Discord.RichEmbed()
         .setAuthor(member.user.tag, member.user.displayAvatarURL)
@@ -40,4 +19,3 @@ bot.on("guildMemberAdd", member => {
     logchannel.send(embed)
     });
     
-    });
