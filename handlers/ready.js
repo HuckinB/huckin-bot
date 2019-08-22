@@ -1,5 +1,5 @@
 const {bot} = require('../index');
-const config = require("../config.json");
+const config = require("../settings/config.json");
 
 var today = new Date();
 var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();

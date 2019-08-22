@@ -1,6 +1,6 @@
 const { RichEmbed } = require("discord.js");
 const fetch = require("node-fetch");
-const { cyan } = require("../colours.json");
+const colours = require("../settings/colours.json")
 const { stripIndents } = require("common-tags");
 const dateFormat = require("dateformat");
 

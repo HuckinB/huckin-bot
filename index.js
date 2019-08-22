@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const mysql = require("mysql");
-const tokenfile = require("./token.json");
+const tokenfile = require("./settings/token.json");
 require("./functions")(bot);
 
 bot.commands = new Discord.Collection();

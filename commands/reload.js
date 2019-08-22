@@ -1,5 +1,5 @@
 const Discord = require("discord.js")
-const botconfig = require("../config.json");
+const botconfig = require("../settings/config.json");
 module.exports.run = async (bot, message, args) => {
 
     if(message.author.id != "228575716214702080") return message.channel.send("You are not the bot owner!");

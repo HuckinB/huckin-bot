@@ -1,5 +1,5 @@
 const {bot} = require('../index');
-const config = require("../config.json");
+const config = require("../settings/config.json");
 const mysql = require("mysql");
 const Discord = require("discord.js");
 
