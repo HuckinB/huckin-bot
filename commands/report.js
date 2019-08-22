@@ -12,12 +12,13 @@ module.exports.run = async (bot, message, args) => {
     if(!reason) return message.channel.send(`Please provide a reason for reporting **${target.user.tag}**`).then(m => m.delete(15000))
 
     // grab reports channel
-    let sChannel = message.guild.channels.find(x => x.name === "reports")
+    let rChannel = message.guild.channels.find(x => x.name === "reports")
+    if (!rChannel) return message.reply("Please ask a moderator to create a `reports` channel").then(m => m.delete(15000))
 
     // send to reports channel and add tick or cross
 
     message.channel.send("Your report has been filed to the staff team. Thank you!").then(m => m.delete(15000))
-    sChannel.send(`**${message.author.tag}** has reported **${target.user.tag}** for **${reason}**.`).then(async msg => {
+    rChannel.send(`**${message.author.tag}** has reported **${target.user.tag}** for **${reason}**.`).then(async msg => {
         await msg.react("✅")
         await msg.react("❌")
     })
