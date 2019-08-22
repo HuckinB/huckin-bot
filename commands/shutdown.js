@@ -17,5 +17,8 @@ module.exports.run = async (bot, message, args) => {
 
 module.exports.help = {
     name: "shutdown",
+    description: "Shutsdown bot",
+    usage: "!shutdown",
+    accessableby: "Owner",
     aliases: []
 }

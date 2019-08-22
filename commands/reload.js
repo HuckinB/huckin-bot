@@ -18,6 +18,9 @@ module.exports.run = async (bot, message, args) => {
     message.channel.send(`The command \`${args[0].toUpperCase()}\` has been reloaded!`)
 }
 module.exports.help = {
-  name:"reload",
-  aliases: []
-}
+    name: "reload",
+    description: "Reloads command!",
+    usage: "!reload",
+    accessableby: "Owner",
+    aliases: ["reload"]
+  }

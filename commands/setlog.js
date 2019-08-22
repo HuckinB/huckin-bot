@@ -51,7 +51,10 @@ module.exports.run = async (bot, message, args) => {
     }
 
 module.exports.help = {
-    name:"setlog",
+    name: "setlog",
+    description: "Sets log channel",
+    usage: "!setlog #channel",
+    accessableby: "Admins",
     aliases: []
-  }
+}
   

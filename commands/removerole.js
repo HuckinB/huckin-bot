@@ -36,5 +36,8 @@ module.exports.run = async (bot, message, args) => {
 
 module.exports.help = {
     name: "removerole",
+    description: "Removes a role to a member of the guild!",
+    usage: "!removerole",
+    accessableby: "Moderators",
     aliases: ["rr", "roleremove"]
 }

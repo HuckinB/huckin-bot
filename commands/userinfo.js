@@ -28,6 +28,9 @@ module.exports.run = async (bot, message, args) => {
   message.delete().catch();
 }
 module.exports.help = {
-  name:"userinfo",
-  aliases: []
+  name: "userinfo",
+  description: "Displays info of a user",
+  usage: "!userinfo <user>",
+  accessableby: "Members",
+  aliases: ["ui"]
 }

@@ -7,6 +7,8 @@ module.exports.run = async (bot, message, args) => {
 
 module.exports.help = {
     name: "ping",
-    aliases: []
-}
-    
+    description: "Shows ping of bot!",
+    usage: "!ping",
+    accessableby: "Members",
+    aliases: ["p", "ping"]
+  }

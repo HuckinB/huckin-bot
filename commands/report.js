@@ -26,5 +26,8 @@ module.exports.run = async (bot, message, args) => {
 
 module.exports.help = {
     name: "report",
+    description: "reports a user of the guild",
+    usage: "!report <user> <reason>",
+    accessableby: "Members",
     aliases: []
 }
