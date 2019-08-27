@@ -25,6 +25,7 @@ bot.on("message", async message => {
 
     if (command) command.run(bot, message, args);
 
+
     // let cmd = bot.commands.get(command.slice(prefix.length));
     // if (cmd) cmd.run(bot, message, args);
 });
