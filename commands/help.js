@@ -33,7 +33,7 @@ module.exports.run = async (bot, message, args) => {
         .setThumbnail(bot.user.displayAvatarURL)
         .setTimestamp()
         .setDescription(`These are the avaliable commands for the ${bot.user.username}!\nThe bot prefix is: ${prefix}`)
-        .addField(`Commands:`, "``botinfo`` ``help`` ``report`` ``serverinfo`` ``steam`` ``suggest`` ``uptime`` ``userinfo``")
+        .addField(`Commands:`, "``botinfo`` ``help`` ``report`` ``reportid ``serverinfo`` ``steam`` ``suggest`` ``uptime`` ``userinfo``")
         .setFooter("Huckin-Bot", bot.user.displayAvatarURL)
         message.channel.send(embed).then(m => m.delete(10000));
         message.author.send(Sembed)

@@ -9,7 +9,7 @@ var connection = mysql.createConnection({
 });
 
 module.exports.run = async (bot, message, args) => {
-    connection.query('INSERT INTO reports (reporter, reportee, reason) VALUES ('+`'${message.author}','${message.mentions.members.first()}','${args[1]}'`+ ')', function (error, results, fields) {
+    connection.query('INSERT INTO reports (reporter, reportee, reason) VALUES ('+`'${message.author}','${message.mentions.members.first()}','${message.content}'`+ ')', function (error, results, fields) {
         if(error) {
             throw error;
             message.reply("Error!");
