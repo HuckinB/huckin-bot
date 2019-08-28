@@ -1,6 +1,33 @@
 const Discord = require("discord.js")
+const mysql = require("mysql");
+
+var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'bot',
+    password: 'IgRHhGezoOiw8Wd5',
+    database: 'huckinb'
+});
 
 module.exports.run = async (bot, message, args) => {
+    connection.query('INSERT INTO reports (reporter, reportee, reason) VALUES ('+`'${message.author}','${message.mentions.members.first()}','${args[1]}'`+ ')', function (error, results, fields) {
+        if(error) {
+            throw error;
+            message.reply("Error!");
+            return;
+
+        }
+        });
+
+    connection.query('SELECT id FROM `reports` ORDER BY `reports`.`ID` DESC', function (error, results, fields) {
+        var data = JSON.stringify(results[0].id);
+        message.channel.send(`Your report has been filed to the staff team. Thank you!\n Your Report ID is: ${data}`).then(m => m.delete(15000));
+        console.log(results);
+        
+        if(error) {
+            throw error;
+            message.reply("Error!");
+            return;
+        }});
 
     message.delete()
     // mentioned or grabbed user
@@ -17,7 +44,7 @@ module.exports.run = async (bot, message, args) => {
 
     // send to reports channel and add tick or cross
 
-    message.channel.send("Your report has been filed to the staff team. Thank you!").then(m => m.delete(15000))
+    // message.channel.send(`Your report has been filed to the staff team. Thank you!\n Your Report ID is: ${rows}`).then(m => m.delete(15000))
     rChannel.send(`**${message.author.tag}** has reported **${target.user.tag}** for **${reason}**.`).then(async msg => {
         await msg.react("✅")
         await msg.react("❌")
