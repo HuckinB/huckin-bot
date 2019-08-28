@@ -11,4 +11,5 @@ bot.on("ready", async () => {
     console.log(`<| Succesfully logged in as ${bot.user.username}#${bot.user.discriminator} at ${time} - ${date} |>`);
     bot.user.setActivity('me get built!', { type: 'WATCHING'})
 
+
 });

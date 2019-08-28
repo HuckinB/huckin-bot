@@ -9,26 +9,7 @@ var connection = mysql.createConnection({
 });
 
 module.exports.run = async (bot, message, args) => {
-    connection.query('INSERT INTO reports (reporter, reportee, reason) VALUES ('+`'${message.author}','${message.mentions.members.first()}','${message.content}'`+ ')', function (error, results, fields) {
-        if(error) {
-            throw error;
-            message.reply("Error!");
-            return;
-
-        }
-        });
-
-    connection.query('SELECT id FROM `reports` ORDER BY `reports`.`ID` DESC', function (error, results, fields) {
-        var data = JSON.stringify(results[0].id);
-        message.channel.send(`Your report has been filed to the staff team. Thank you!\n Your Report ID is: ${data}`).then(m => m.delete(15000));
-        console.log(results);
-        
-        if(error) {
-            throw error;
-            message.reply("Error!");
-            return;
-        }});
-
+    
     message.delete()
     // mentioned or grabbed user
     let target = message.mentions.members.first() || message.guild.members.get(args[0])
@@ -45,10 +26,41 @@ module.exports.run = async (bot, message, args) => {
     // send to reports channel and add tick or cross
 
     // message.channel.send(`Your report has been filed to the staff team. Thank you!\n Your Report ID is: ${rows}`).then(m => m.delete(15000))
-    rChannel.send(`**${message.author.tag}** has reported **${target.user.tag}** for **${reason}**.`).then(async msg => {
-        await msg.react("✅")
-        await msg.react("❌")
-    })
+
+
+        connection.query('INSERT INTO reports (servername, channelname, reporter, reportee, reason) VALUES ('+`'${message.guild.name}','${message.channel.name}','${message.author}','${message.mentions.members.first()}','${reason}'`+ ')', function (error, results, fields) {
+        if(error) {
+            throw error;
+            message.reply("Error!");
+            return;
+
+        }
+        });
+
+    connection.query('SELECT id FROM `reports` ORDER BY `reports`.`ID` DESC', function (error, results, fields) {
+        let data = JSON.stringify(results[0].id);
+        message.channel.send(`Your report has been filed to the staff team. Thank you!\n Your Report ID is: ${data}`).then(m => m.delete(15000));
+
+        let embed = new Discord.RichEmbed()
+        .setTitle(`**New Report!**`)
+        .setColor(0xff0000)
+        .addField("Report ID:", data)
+        .addField("Reporter:", message.author)
+        .addField("Reportee:", message.mentions.members.first())
+        .addField("Reason", reason)
+
+        rChannel.send(embed).then(async msg => {
+          await msg.react("✅")
+          await msg.react("❌")
+        });
+        
+        if(error) {
+            throw error;
+            message.reply("Error!");
+            return;
+        }});
+
+
 
 }
 

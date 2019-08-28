@@ -15,6 +15,8 @@ module.exports.run = async (bot, message, args) => {
     connection.query(`SELECT * FROM reports WHERE id = ${args[0]}`, function (error, results, fields) {
         // console.log(results)
         var rid = JSON.stringify(results[0].ID);
+        var guild = JSON.stringify(results[0].servername).replace(/"/g, '');
+        var channel = JSON.stringify(results[0].channelname).replace(/"/g, '');
         var reporter = JSON.stringify(results[0].reporter).replace(/"/g, '');
         var reportee = JSON.stringify(results[0].reportee).replace(/"/g, '');
         var reason = JSON.stringify(results[0].reason).replace(/"/g, '');
@@ -22,6 +24,8 @@ module.exports.run = async (bot, message, args) => {
         let embed = new Discord.RichEmbed()
             .setTitle(`Report Information`)
             .addField("Report ID:", rid)
+            .addField("Guild:", guild)
+            .addField("Channel:", channel)
             .addField("Reporter:", reporter)
             .addField("Reportee:", reportee)
             .addField("Reason", reason)
