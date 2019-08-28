@@ -1,37 +1,55 @@
 const Discord = require("discord.js")
+const mysql = require("mysql");
+
+var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'bot',
+    password: 'IgRHhGezoOiw8Wd5',
+    database: 'huckinb'
+});
 
 module.exports.run = async (bot, message, args) => {
 
     message.delete()
 
-    // reasoning definition
-    let reason = args.slice(1).join(" ")
-    if(!reason) return message.channel.send(`Please provide a suggestion **${target.user.tag}**`).then(m => m.delete(15000))
+    let suggestion = args.slice(0).join(" ")
+    if(!suggestion) return message.channel.send(`You did not give a suggestion **${message.author}**`).then(m => m.delete(15000));
 
-    // grab reports channel
-    let sChannel = message.guild.channels.find(x => x.name === "suggestions")
-    if (!sChannel) return message.reply("Please ask a moderator to create a `suggestions` channel").then(m => m.delete(15000))
-    
+    let sChannel = message.guild.channels.find(x => x.name === "suggestions");
+    if (!sChannel) return message.reply("Please ask a moderator to create a `suggestions` channel").then(m => m.delete(15000));
 
-    // send to reports channel and add tick or cross
+    connection.query('INSERT INTO suggestions (servername, channelname, suggester, suggestion) VALUES ('+`'${message.guild.name}','${message.channel.name}','${message.author}','${suggestion}'`+ ')', function (error, results, fields) {
+        if(error) {
+            throw error;
+            message.reply("Error!");
+            return;
 
-    message.channel.send("Your suggestion has sent the staff team. Thank you!").then(m => m.delete(15000))
-    let sEmbed = new Discord.RichEmbed()
-        .setTitle(`**New Suggestion**`)
-        .setThumbnail(message.author.avatarURL)
-        .setColor(colours.orange)
-        .addField("Suggested By:", message.author.username)
-        .addField("Suggestion:", reason)
-        .setTimestamp()
-        .setFooter(`ID: ${message.author.id}`)
-        sChannel.send(sEmbed)
+        }
+        });
 
-}
+        connection.query('SELECT id FROM `suggestions` ORDER BY `suggestions`.`ID` DESC', function (error, results, fields) {
+            let data = JSON.stringify(results[0].id);
+            message.channel.send(`Thank you for your suggestion!\n Your Suggestion ID is: ${data}`).then(m => m.delete(15000));
+
+    let embed = new Discord.RichEmbed()
+        .setTitle(`**New Suggestion!**`)
+        .setColor("RANDOM")
+        .addField("Suggestion ID:", data)
+        .addField("Suggester:", message.author)
+        .addField("Suggested in:", message.channel)
+        .addField("Suggestion:", suggestion)
+
+        sChannel.send(embed).then(async msg => {
+          await msg.react("✅")
+          await msg.react("❌")
+        });
+
+})}
 
 module.exports.help = {
     name: "suggest",
     description: "Makes a suggestion",
     usage: "!suggest <suggestion>",
     accessableby: "Members",
-    aliases: []
+    aliases: ["suggestion"]
 }
