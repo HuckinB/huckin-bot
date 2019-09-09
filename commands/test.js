@@ -11,10 +11,9 @@ var connection = mysql.createConnection({
 module.exports.run = async (bot, message, args) => {
     console.log("Working!");
 
-    connection.query('INSERT INTO `config`(serverid) VALUES ('+`'${message.guild.id}'`+ ')', function (error, results, fields) {
-})
+    message.channel.send(`1. ${message.guild.members.filter(member => !member.user.bot).size}`)
+    message.channel.send(`2. ${bot.users.size}`)
 
-    
 }
 module.exports.help = {
     name: "test",

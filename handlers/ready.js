@@ -9,7 +9,9 @@ var timesql = today.getHours()+(today.getMinutes())+today.getSeconds();
 bot.afk = new Map();
 bot.on("ready", async () => {
     console.log(`<| Succesfully logged in as ${bot.user.username}#${bot.user.discriminator} at ${time} - ${date} |>`);
-    bot.user.setActivity('me get built!', { type: 'WATCHING'})
+    bot.user.setActivity(`${bot.users.size} players!`, { type: 'WATCHING'})
+    // ${bot.users.filter(member => !member.user.bot).size}
+    
 
 
 });
