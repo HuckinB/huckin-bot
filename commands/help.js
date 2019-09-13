@@ -1,7 +1,6 @@
 const Discord = require("discord.js")
-const botconfig = require("../settings/config.json");
 const colours = require("../settings/colours.json")
-const prefix = botconfig.prefix
+const prefix = "!";
 
 
 module.exports.run = async (bot, message, args) => {

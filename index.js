@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client({disableEveryone: true});
 const mysql = require("mysql");
-const tokenfile = require("./settings/token.json");
 require("./functions")(bot);
 
 bot.commands = new Discord.Collection();
@@ -16,10 +15,13 @@ var connection = mysql.createConnection({
     database: 'huckinb'
 });
 // End of SQL Connection
-
-
 module.exports = {
     bot: bot
 };
 
-bot.login(tokenfile.token)
+    connection.query('SELECT token FROM `settings`', function (error, results, fields) {
+        let data = JSON.stringify(results[0].token).replace(/"/g, '');
+        bot.login(data)
+    })
+
+

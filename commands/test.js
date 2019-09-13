@@ -9,12 +9,23 @@ var connection = mysql.createConnection({
 });
 
 module.exports.run = async (bot, message, args) => {
-    console.log("Working!");
+    // console.log("Working!");
 
-    message.channel.send(`1. ${message.guild.members.filter(member => !member.user.bot).size}`)
-    message.channel.send(`2. ${bot.users.size}`)
 
-}
+    connection.query('SELECT state FROM `settings`', function (error, results, fields) {
+        let data = JSON.stringify(results[0].state);
+
+        if(data == 1){
+            connection.query('UPDATE `settings` SET `state` = 0')
+        }else if(data == 0){
+            connection.query('UPDATE `settings` SET `state` = 1')
+        }
+
+
+
+    }
+    )}
+
 module.exports.help = {
     name: "test",
     aliases: []

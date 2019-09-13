@@ -1,5 +1,5 @@
 const {bot} = require('../index');
-const config = require("../settings/config.json");
+const config = require('../settings/prefix.json');
 
 bot.on("message", async message => {
     if(message.author.bot) return;
@@ -24,7 +24,6 @@ bot.on("message", async message => {
     }
 
     if (command) command.run(bot, message, args);
-
 
     // let cmd = bot.commands.get(command.slice(prefix.length));
     // if (cmd) cmd.run(bot, message, args);

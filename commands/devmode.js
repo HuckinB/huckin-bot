@@ -1,26 +1,28 @@
 const Discord = require("discord.js")
-const botconfig = require("../settings/config.json");
-const fs = require("fs");
+const mysql = require("mysql");
+
+var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'bot',
+    password: 'IgRHhGezoOiw8Wd5',
+    database: 'huckinb'
+});
 
 module.exports.run = async (bot, message, args) => {
-    
-    let currentMode = botconfig.ready;
+    connection.query('SELECT state FROM `settings`'), function (error, results, fields) {
+        const ready = JSON.stringify(results[0].state).replace(/"/g, '');
 
-  
+        if(ready == 1){
+            connection.query('UPDATE `settings` SET `state` = `0`')
+        }else if(ready == 0){
+            connection.query('UPDATE `settings` SET `state` = `1`')
+        }
 
 
 
 
 
-
-
-    // if(!args[0]){ 
-    //     message.channel.send(`Devmode is currently ${currentMode}`)
-    // } else if(args[0] = "0"){
-    //     fs.writeFile(config.json, ready, 0)
-    // } else if(args[0] = "1"){
-    //     fs.writeFile(botconfig, ready, 1)
-    // }
+    }
 
 }
 

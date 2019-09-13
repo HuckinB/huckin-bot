@@ -9,47 +9,18 @@ var connection = mysql.createConnection({
 });
 
 module.exports.run = async (bot, message, args) => {
+    message.delete()
     if(!message.member.hasPermission('ADMINISTRATOR','MANAGE_GUILD')) return message.channel.send('Sorry, you cannot change server settings');
-      connection.query('SELECT channelid FROM server_log_channels WHERE `serverid`=' + message.guild.id + ' LIMIT 1', function (error, results, fields) {
-            if(error) {
-                throw error;
-                message.reply("Error!");
-                return;
-            };
-          var serverPrefix;
-        if (args[0] === undefined || message.mentions.channels.first() === undefined) {
-              if (results === undefined || results.length == 0) {
-                message.channel.send('Log channel is `#mod-log`.');
-            } else if (results !== undefined || results.length !== 0) {
-                var serverPrefix = JSON.stringify(results[0]["channelid"]);
-                serverPrefix = serverPrefix.replace('"','');
-                serverPrefix = serverPrefix.replace('"', '');
-                message.channel.send('Log channel is <#' + serverPrefix + '>.');
-            };
-        } else if (results === undefined || results.length == 0 && args !== undefined) {
-          connection.query('INSERT INTO server_log_channels (serverid, channelid) VALUES ('+`'${message.guild.id}','${message.mentions.channels.first().id}'`+ ')', function (error, results, fields) {
-                if(error) {
-                    throw error;
-                    message.reply("Error!");
-                    return;
-                };
-                  message.channel.send('Log channel has been changed to <#' + message.mentions.channels.first().id + '>.');
-          
-      });
-            } else if (results.length !== 0 && args !== undefined) {
-                connection.query('UPDATE server_log_channels SET channelid='+ `'${message.mentions.channels.first().id}'` +' WHERE serverid=' + message.guild.id, function (error, results, fields) {
-                    if(error) {
-                        throw error;
-                        message.reply("Error!");
-                        return;
-                    };
-                    message.channel.send('Log channel has been changed to <#' +  message.mentions.channels.first().id + '>.');
-        });
-        }
-            });
-        message.delete().catch();
-    }
 
+    connection.query('UPDATE `log_channel` SET `name` = ('+`'${message.mentions.channels.first().name}'`+ '), `id` = ('+`'${message.mentions.channels.first().id}'`+ ')', function (error, results, fields) {
+        if(error) {
+            throw error;
+            message.reply("Error!");
+            return;
+    }
+    message.channel.send(`Log Channel set to ${message.mentions.channels.first()}`).then(m => m.delete(5000));
+})
+}
 module.exports.help = {
     name: "setlog",
     description: "Sets log channel",
