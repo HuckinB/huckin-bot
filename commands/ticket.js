@@ -45,7 +45,6 @@ module.exports.run = async (bot, message, args) => {
         connection.query('SELECT ticketID FROM `tickets` ORDER BY `tickets`.`ticketID` DESC', function (error, results, fields) {
             let data = JSON.stringify(results[0].ticketID);
 
-            console.log(data);
             
   
 
@@ -124,34 +123,27 @@ module.exports.run = async (bot, message, args) => {
         var sSql = "UPDATE tickets SET state = 'FALSE' WHERE ticketID = " + mysql.escape(tID);
         connection.query(sSql);
     }//End of Close
-    else if(args[0] == "add"){
-        let tID = reason;
-        connection.query('SELECT * FROM tickets WHERE ticketID = ' + mysql.escape(tID), function (error, results, fields) {
-            if(error) {
-                throw error;
-                message.reply("Error!");
-                return;
-            }
-            
-            let owner = JSON.stringify(results[0].user).replace(/"/g, '');
-            if(message.author == owner || message.member.roles.find(r => r.name === "Support")){
-                let cChannel = bot.channels.find(x => x.name === `ticket-${reason}`)
-                let nUser = message.mentions.members.first();
-                cChannel.overwritePermissions(message.mentions.members,{'READ_MESSAGES':true, 'SEND_MESSAGES':true})
-                cChannel.send(`Succesfully added ${nUser} to the ticket!`)
-                console.log(nUser.id);
-                
-
-                
-            }}
-
-    )}
+    else{
+        message.channel.send({embed: {
+            color: 10181046,
+            author: {
+                name: bot.user.username,
+                icon_url: bot.user.avatarURL
+            },
+            title: `**Ticket System**`,
+            description: `Here are the following commands to use our Custom Ticket System`,
+            fields: [{
+                name: "To create a ticket",
+                value: "`!ticket create`"
+            }]
+            }})
+    }
 }
 module.exports.help = {
     name: "ticket",
     description: "Ticket System",
     usage: "!ticket create/close/add/remove",
     accessableby: "Member",
-    aliases: ["support"]
+    aliases: ["ticket"]
 }
     

@@ -30,7 +30,7 @@ module.exports.run = async (bot, message, args) => {
     .addField("Reason:", reason)
     .addField("Date:", message.createdAt.toLocaleString())
     
-        let sChannel = message.guild.channels.find(c => c.name === "logs")
+        let sChannel = message.guild.channels.find(c => c.name === "modlogs")
         sChannel.send(embed)
     message.delete().catch();
 }

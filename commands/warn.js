@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const mysql = require("mysql");
+const colours = require("../settings/colours.json")
 
 var connection = mysql.createConnection({
     host: 'localhost',
@@ -28,7 +29,6 @@ module.exports.run = async (bot, message, args) => {
         connection.query('SELECT WarnID FROM `warnings` ORDER BY `warnings`.`WarnID` DESC', function (error, results, fields) {
             let data = JSON.stringify(results[0].WarnID).replace(/"/g, '');
             console.log(data);
-
 
             connection.query('SELECT COUNT(*) FROM `warnings` WHERE user = ' + mysql.escape(target), function (error, results, fields) {
                 let results2 = JSON.stringify(results);
@@ -62,7 +62,17 @@ module.exports.run = async (bot, message, args) => {
             })
           })
     });
-        
+        let embed = new Discord.RichEmbed()
+            .setColor(colours.redlight)
+            .setAuthor(`${message.guild.name} Modlogs`, message.guild.iconURL)
+            .addField("Moderation:", "Warn")
+            .addField("User:", target.user)
+            .addField("Moderator:", message.author)
+            .addField("Reason:", reason)
+            .addField("Date:", message.createdAt.toLocaleString())
+    
+            let sChannel = message.guild.channels.find(c => c.name === "modlogs")
+            sChannel.send(embed)
     }
 }
 module.exports.help = {

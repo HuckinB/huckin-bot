@@ -14,7 +14,7 @@ module.exports.run = async (bot, message, args) => {
     
     connection.query(`SELECT * FROM reports WHERE id = ${args[0]}`, function (error, results, fields) {
         // console.log(results)
-        var rid = JSON.stringify(results[0].ID);
+        var rid = JSON.stringify(results[0].id);
         var guild = JSON.stringify(results[0].servername).replace(/"/g, '');
         var channel = JSON.stringify(results[0].channelname).replace(/"/g, '');
         var reporter = JSON.stringify(results[0].reporter).replace(/"/g, '');

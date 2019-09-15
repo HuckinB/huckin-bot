@@ -46,7 +46,7 @@ module.exports.run = async (bot, message, args) => {
 
 }
 module.exports.help = {
-    name: "suggest",
+    name: "suggestid",
     description: "Gets data of a Suggestion",
     usage: "!suggest [id]",
     accessableby: "Staff",
