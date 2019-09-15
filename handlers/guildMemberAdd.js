@@ -4,6 +4,7 @@ const Discord = require("discord.js");
 
 bot.on("guildMemberAdd", member => {
     let logchannel = bot.channels.find(x => x.name === "logs")
+    let welcomechannel = bot.channels.find(x => x.name === "welcome-log")
         
     let embed = new Discord.RichEmbed()
         .setAuthor(member.user.tag, member.user.displayAvatarURL)
@@ -17,5 +18,6 @@ bot.on("guildMemberAdd", member => {
     if(!embed) return;
     
     logchannel.send(embed)
+    welcomechannel.send(embed)
     });
     

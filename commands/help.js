@@ -20,7 +20,6 @@ module.exports.run = async (bot, message, args) => {
         }}
 
     if(!args[0]) {
-        message.delete();
         let embed = new Discord.RichEmbed()
         .setAuthor(`Help Command!`, message.guild.iconURL)
         .setColor(colours.redlight)
@@ -32,7 +31,7 @@ module.exports.run = async (bot, message, args) => {
         .setThumbnail(bot.user.displayAvatarURL)
         .setTimestamp()
         .setDescription(`These are the avaliable commands for the ${bot.user.username}!\nThe bot prefix is: ${prefix}`)
-        .addField(`Commands:`, "``botinfo`` ``help`` ``report`` ``reportid`` ``serverinfo`` ``steam`` ``suggest`` ``uptime`` ``userinfo``")
+        .addField(`Commands:`, "``botinfo`` ``help`` ``ifmp`` ``ping`` ``report`` ``reportid`` ``screenshare`` ``serverinfo`` ``steam`` ``suggest`` ``suggestid`` ``ticket`` ``uptime`` ``userinfo``")
         .setFooter("Huckin-Bot", bot.user.displayAvatarURL)
         message.channel.send(embed).then(m => m.delete(10000));
         message.author.send(Sembed)

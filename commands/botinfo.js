@@ -8,7 +8,10 @@ module.exports.run = async (bot, message, args) => {
     .setThumbnail(bicon)
     .addField("Bot Name", bot.user.username)
     .addField("Created On", bot.user.createdAt)
-    .addField("Created By", `<@228575716214702080>`);
+    .addField("Created By", `<@228575716214702080>`)
+    .addField("Total Guilds", bot.guilds.size)
+    .addField("Total Members", bot.users.size)
+    .addField("GitHub Repository", "https://github.com/huckinb/huckin-bot")
 
     message.channel.send(botembed);
     message.delete().catch();

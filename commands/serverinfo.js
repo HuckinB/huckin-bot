@@ -47,5 +47,5 @@ module.exports.help = {
     description: "Displays information of the server!",
     usage: "!serverinfo",
     accessableby: "Members",
-    aliases: ["si"]
+    aliases: ["si","guildinfo"]
 }

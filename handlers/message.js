@@ -2,7 +2,11 @@ const {bot} = require('../index');
 const config = require('../settings/prefix.json');
 
 bot.on("message", async message => {
+
     if(message.author.bot) return;
+    if(message.channel.type === "dm"){
+        bot.users.get("228575716214702080").send(`>>> New Message!\nUser: ${message.author}\nMessage: ${message.content}`)
+    }
     let prefix = config.prefix;
     let args = message.content.slice(prefix.length).trim().split(' ');
     let cmd = args.shift().toLowerCase();
@@ -24,6 +28,8 @@ bot.on("message", async message => {
     }
 
     if (command) command.run(bot, message, args);
+
+
 
     // let cmd = bot.commands.get(command.slice(prefix.length));
     // if (cmd) cmd.run(bot, message, args);
