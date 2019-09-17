@@ -10,9 +10,14 @@ var connection = mysql.createConnection({
 
 module.exports.run = async (bot, message, args) => {
     // console.log("Working!");
-    message.reply(`${message.member.voiceChannel.id}`)
+    message.guild.createChannel("Test", {type: 'text'}).then(c => c.lockPermissions())
+        
+        
+    }
+    
 
-}
+
+
 module.exports.help = {
     name: "test",
     aliases: []

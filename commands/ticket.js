@@ -49,11 +49,11 @@ module.exports.run = async (bot, message, args) => {
   
 
         message.guild.createChannel(`Ticket-${data}`, {type: 'text'}).then(channel => {
-            channel.setParent(category).then(channel => {channel.lockPermissions()});
-            channel.setTopic(`${message.author.id} - ${moment.utc(message.createdAt).format('DD/MM/YYYY, HH:mm')} - ${reason}`);
-            channel.overwritePermissions(message.author,{'READ_MESSAGES':true, 'SEND_MESSAGES':true})
+            channel.setParent(category).then(
+                c => c.lockPermissions()).then(
+                    c => c.setTopic(`${message.author.id} - ${moment.utc(message.createdAt).format('DD/MM/YYYY, HH:mm')} - ${reason}`)).then(
+                        c => c.overwritePermissions(message.author,{'READ_MESSAGES':true, 'SEND_MESSAGES':true}))
 
-            
             connection.query('SELECT ticketID FROM `tickets` ORDER BY `tickets`.`ticketID` DESC', function (error, results, fields) {
                 let data = JSON.stringify(results[0].ticketID);
             let embed = new Discord.RichEmbed()
@@ -72,34 +72,6 @@ module.exports.run = async (bot, message, args) => {
         
         
     }//End of Create
-    // else if(args[0] == "archive") {
-    //     let tID = reason;
-    //     connection.query('SELECT * FROM tickets WHERE ticketID = ' + mysql.escape(tID), function (error, results, fields) {
-    //         if(error) {
-    //             throw error;
-    //             message.reply("Error!");
-    //             return;
-    //         }
-            
-    //         let owner = JSON.stringify(results[0].user).replace(/"/g, '');
-    //         if(message.author == owner){
-    //             message.reply("Archiving Ticket").then(m => m.delete(15000));
-    //             let cChannel = bot.channels.find(x => x.name === `ticket-${reason}`)
-    //             cChannel.setParent(archive);
-    //         }
-    //         else if(message.member.roles.find(r => r.name === "Support")){
-    //             message.reply("Archiving Ticket").then(m => m.delete(15000));
-    //             let cChannel = bot.channels.find(x => x.name === `ticket-${reason}`)
-    //             cChannel.setParent(archive);
-    //         }
-    //         else 
-    //         message.reply("You are not the owner!").then(m => m.delete(15000));
-
-            
-            
-    //     });
-    
-    // }//End of Archive
     else if(args[0] == "close"){
         let tID = reason;
         connection.query('SELECT * FROM tickets WHERE ticketID = ' + mysql.escape(tID), function (error, results, fields) {
@@ -113,8 +85,8 @@ module.exports.run = async (bot, message, args) => {
             if(message.author == owner || message.member.roles.find(r => r.name === "Support")){
                 message.reply("Closing Ticket").then(m => m.delete(15000));
                 let cChannel = bot.channels.find(x => x.name === `ticket-${reason}`)
-                cChannel.setParent(archive);
-                cChannel.overwritePermissions(message.author,{'READ_MESSAGES':false, 'SEND_MESSAGES':false})
+                cChannel.setParent(archive).then(c => c.overwritePermissions(message.author,{'READ_MESSAGES':false, 'SEND_MESSAGES':false}))
+                
             }
             else 
             message.reply("You are not the owner!").then(m => m.delete(15000));
@@ -123,6 +95,43 @@ module.exports.run = async (bot, message, args) => {
         var sSql = "UPDATE tickets SET state = 'FALSE' WHERE ticketID = " + mysql.escape(tID);
         connection.query(sSql);
     }//End of Close
+    else if(args[0] == "add"){
+        let tID = reason;
+        let user = message.mentions.members.first()
+        connection.query('SELECT * FROM tickets WHERE ticketID = ' + mysql.escape(tID), function (error, results, fields) {
+            if(error) {
+                throw error;
+                message.reply("Error!");
+                return;
+            }
+
+            let owner = JSON.stringify(results[0].user).replace(/"/g, '');
+            if(message.author == owner || message.member.roles.find(r => r.name === "Support")){
+                let addUser = message.mentions.members.first()
+        message.channel.overwritePermissions(addUser, {'READ_MESSAGES':true, 'SEND_MESSAGES':true})
+            } else{
+                message.channel.send("You do not have permission to add a User to that Ticket!")
+            }
+        })
+    }//End of Add
+    else if(args[0] == "remove"){
+        let tID = reason;
+        let user = message.mentions.members.first()
+        connection.query('SELECT * FROM tickets WHERE ticketID = ' + mysql.escape(tID), function (error, results, fields) {
+            if(error) {
+                throw error;
+                message.reply("Error!");
+                return;
+            }
+
+            let owner = JSON.stringify(results[0].user).replace(/"/g, '');
+            if(message.author == owner || message.member.roles.find(r => r.name === "Support")){
+        let uChannel = message.channel.overwritePermissions(user, {'READ_MESSAGES':false, 'SEND_MESSAGES':false})
+            } else{
+                message.channel.send("You do not have permission to remove a User to that Ticket!")
+            }
+        })
+    }
     else{
         message.channel.send({embed: {
             color: 10181046,
