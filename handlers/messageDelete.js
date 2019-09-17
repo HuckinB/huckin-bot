@@ -4,6 +4,8 @@ const Discord = require("discord.js");
 const guild = bot.guilds.get('516952979321126912');
 
 bot.on("messageDelete", (messageDelete) => {
+    if(messageDelete.author.bot) return;
+
     let logchannel = bot.channels.find(x => x.name === "logs");
 
     let embed = new Discord.RichEmbed()
